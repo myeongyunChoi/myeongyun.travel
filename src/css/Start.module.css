@@ -1,0 +1,31 @@
+.start_page{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* align-self: center; */
+    text-align: center;
+    gap: 3rem;
+}
+
+.title h3{
+    font-size: 1.3rem;
+    font-weight: 200;
+}
+
+.start_page h1{
+    font-size: 4.25rem;
+    margin-top: 0.5rem;
+}
+
+.start_btn{
+    width: 26rem;
+    line-height: 5rem;
+    background-color: #BFF0FF;
+    color: #ffff;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1rem;
+    cursor: pointer;
+}

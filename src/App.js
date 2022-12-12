@@ -1,10 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
+import './css/common.module.css';
+import Start from './page/Start';
 
 function App() {
   return (
     <div className="App">
-      <h1>travel page</h1>
+      <Start />
     </div>
   );
 }
