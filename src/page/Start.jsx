@@ -1,6 +1,7 @@
 import style from '../css/Start.module.css';
 import { useNavigate } from 'react-router-dom';
 
+
 const Start = () => {
 
     const navigate = useNavigate()
@@ -13,6 +14,7 @@ const Start = () => {
             <div onClick={() => { navigate("/area") }} className={style.start_btn}>
                 <h3>시작하기</h3>
             </div>
+
         </div>
     )
 }
