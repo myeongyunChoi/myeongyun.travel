@@ -1,0 +1,28 @@
+header{
+    width: 100vw;
+    height: 8rem;
+    border: 1px solid #D9D9D9;
+    display: flex;
+    align-items:baseline;
+    padding:  3rem 0 0 2rem;
+    gap: 1.5rem;
+}
+
+header h1{
+    font-size: 2rem;
+}
+
+header p{
+    font-size: 0.75rem;
+    font-weight: 200;
+}
+
+.plan_form{
+    width: 100vw;
+    height: auto;
+    display: flex;
+}
+
+.plan_form div{
+    width: 50vw;
+}
