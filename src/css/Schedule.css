@@ -1,0 +1,80 @@
+.date_wrap {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.75rem;
+    padding-top: 3rem;
+}
+
+.date_wrap h1 {
+    font-size: 1.75rem;
+    font-weight: 500;
+    /* margin-bottom: rem; */
+}
+
+.travel_range {
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    width: 40rem;
+}
+
+.start_date,
+.end_date {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.next_btn2 {
+    width: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.date_arrow_icon {
+    width: 100%;
+    cursor: pointer;
+}
+
+/* calendar custom */
+.react-calendar,
+.react-calendar__viewContainer {
+    width: 40rem !important;
+    height: 30rem !important;
+}
+
+.react-calendar__navigation{
+    height: 5rem !important; 
+}
+
+.react-calendar__navigation__label>span {
+    font-size: 1.3rem;
+}
+
+.react-calendar__navigation button{
+    font-size: 2.5rem !important;
+}
+
+.react-calendar__month-view__days {
+    height: 21rem !important;
+}
+
+.react-calendar__tile--now {
+    background-color: #e9faff !important;
+}
+
+.react-calendar__tile--active {
+    background-color: #BFF0FF !important;
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: #BFF0FF !important;
+}
+
+.react-calendar {
+    border-radius: 10px;
+}

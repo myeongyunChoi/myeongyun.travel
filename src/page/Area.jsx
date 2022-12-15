@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/Area.css'
-import Arrow from '../image/Arrow.png'
+import ArrowImg from '../image/Arrow.png'
 
 const Area = () => {
     const data = [
@@ -50,7 +50,7 @@ const Area = () => {
     }
 
     const nextBtn = () =>{
-        navigate("/date");
+        navigate("/schedule");
     }
 
     return (
@@ -60,7 +60,7 @@ const Area = () => {
                 <div className='area_input_wrap'>
                     <input type="text" placeholder="가고 싶은 지역을 적어주세요" onChange={ e => { areaSearch(e) }} />
                     <span>
-                        {areaName === "" ? null : <img onClick={() => { nextBtn() }} src={Arrow} alt="" className="arrow_icon" />}
+                        {areaName === "" ? null : <img onClick={() => { nextBtn() }} src={ArrowImg} alt="" className="arrow_icon" />}
                     </span>
                 </div>
             </div>
