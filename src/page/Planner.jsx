@@ -6,28 +6,25 @@ const Planner = () => {
 
     const [allList, setAll] = useState()
     const [listData, setList] = useState([])
-    const [listStartNum, setStart] = useState(2);
     const [listEndNum, setEnd] = useState(6);
     const [url, setUrl] = useState(5)
-
     useEffect(() => {
-        const myKey = "ad66d7j6pd5i7q0m";
-        let c1 = "관광지", c2 = "쇼핑", c3 = "숙박", c4 = "음식점", c5 = "축제/행사";
-        //category=c8&
         fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=&locale=kr&category=c${url}&`)
             .then(res => {
                 return res.json();
             })
             .then(data => {
-                let copyData = [...listData];
-                for (let i = listStartNum; i < listEndNum; i++) {
+                let searchTitle = data.items.find((item) => {
+                    return item.title == "서귀포 유채꽃 국제걷기대회"
+                })
+                console.log(searchTitle)
+                let copyData = [];
+                for (let i = 0; i < listEndNum; i++) {
                     copyData.push(data.items[i])
                 }
                 setList(copyData);
-                console.log(url)
             })
-            console.log(url)
-    }, [url])
+    }, [url, listEndNum])
 
     const navigate = useNavigate();
     return (
@@ -48,43 +45,68 @@ const Planner = () => {
                         <p className="festival_name"></p>
                     </div>
                     <div className="restaurant">
-                        <h3 onClick={()=>{setUrl(4)}}>카페 / 음식점</h3>
+                        <h3>카페 / 음식점</h3>
                         <p className="restaurant_name"></p>
                     </div>
                     <div className="place">
-                        <h3 onClick={()=>{setUrl(1)}}>관광지</h3>
+                        <h3>관광지</h3>
                         <p className="place_name"></p>
                     </div>
                     <div className="hotel">
-                        <h3 onClick={()=>{setUrl(2)}}>호텔 / 숙박</h3>
+                        <h3>호텔 / 숙박</h3>
                         <p className="hotel_name"></p>
                     </div>
                 </div>
-                <Search_plan listData={listData} setUrl={setUrl}/>
+                <Search_plan listData={listData} setUrl={setUrl} listEndNum={listEndNum} setEnd={setEnd} />
             </div>
         </>
     )
 }
 
-const Search_plan = ({ listData, setUrl }) => {
+const Search_plan = ({ listData, setUrl, listEndNum, setEnd }) => {
+
+    // console.log(qqq)
+    const [listHeight, setHeight] = useState(0);
+    const [firstScroll, setFirst] = useState(0);
+    const nav = (num) => {
+        // setEnd( listEndNum - listEndNum + 6)
+        setUrl(num)
+    }
+    const infinity = (e) => {
+        const wraptHeight = e.offsetHeight;
+        if (wraptHeight / 2 < e.scrollTop) {
+            if (listHeight / 2 < e.scrollTop) {
+                if (listEndNum <= 93) {
+                    setEnd(listEndNum + 6);
+                    setHeight(listHeight + wraptHeight * 3);
+                }
+            }
+        }
+    }
+
     return (
         <div className="search_board">
             <input type="text" placeholder="검색어를 입력해주세요" />
             <ul className="search_category">
-                <li onClick={()=>{setUrl(5)}}>축제 / 행사</li>
-                <li onClick={()=>{setUrl(4)}}>카페 / 음식점</li>
-                <li onClick={()=>{setUrl(1)}}>관광지</li>
-                <li onClick={()=>{setUrl(2)}}>호텔 / 숙박</li>
+                <li onClick={() => { nav(5) }}>축제 / 행사</li>
+                <li onClick={() => { nav(4) }}>카페 / 음식점</li>
+                <li onClick={() => { nav(1) }}>관광지</li>
+                <li onClick={() => { nav(3) }}>호텔 / 숙박</li>
             </ul>
-            <ul className="search_result">
+            <ul className="search_result" onScroll={(e) => { infinity(e.target) }}>
                 {
                     listData.map((item, idx) => {
                         return (
                             <li key={idx}>
                                 <img className="hotel_img" src={item.repPhoto.photoid.thumbnailpath} alt="hotel img" />
-                                <h4>{item.title}</h4> 
+                                <ul className="text_box">
+                                    <li><h4>{item.title}</h4></li>
+                                    <li><p>{item.introduction}</p></li>
+                                    <li><p>{item.address}</p></li>
+                                    <li><p>{item.phoneno}</p></li>
+                                    <li className="plus_btn"><span>추가하기</span></li>
+                                </ul>
                             </li>
-                            // <img src={item.repPhoto.photoId?.imgpath} alt="" />
                         )
                     })
                 }
