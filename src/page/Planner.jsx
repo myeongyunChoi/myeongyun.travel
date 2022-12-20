@@ -10,6 +10,7 @@ const Planner = () => {
     const [listData, setList] = useState([])
     const [listEndNum, setEnd] = useState(6);
     const [url, setUrl] = useState(5)
+    const [planAmount, setAmount] = useState(0)
     // c1 = 관광지
     // c2 = 쇼핑
     // c3 = 숙박
@@ -25,14 +26,14 @@ const Planner = () => {
                 const filtered = data.items.filter(item => {
                     return item.title.includes("축제")
                 })
-                selector.planAmount = data.items.length
+                setAmount(data.items.length)
                 // console.log(filtered)
                 let copyData = [];
                 for (let i = 0; i < listEndNum; i++) {
                     copyData.push(data.items[i])
                 }
                 setList(copyData);
-                selector.planData = copyData;
+                // selector.planData = copyData;
             })
     }, [url, listEndNum])
     const navigate = useNavigate();
@@ -68,7 +69,7 @@ const Planner = () => {
                         <p className="hotel_name"></p>
                     </div>
                 </div>
-                <SearchPlan setUrl={setUrl} listEndNum={listEndNum} listData ={ listData} setEnd={setEnd} />
+                <SearchPlan setUrl={setUrl} listEndNum={listEndNum} planAmount={planAmount} listData={listData} setEnd={setEnd} />
             </div>
         </>
     )

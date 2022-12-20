@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchName } from '../store';
 
-const SearchPlan = ({ listData, setUrl, listEndNum, setEnd }) => {
+const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
 
     const dispatch = useDispatch();
     const selector = useSelector((state => state))
@@ -17,19 +17,26 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd }) => {
     const infinity = (e) => {
         const wraptHeight = e.offsetHeight;
         if (listHeight / 2 < e.scrollTop) {
-            if (listEndNum < selector.planAmount - 7) {
+            if (listEndNum < planAmount - 7) {
                 setEnd(listEndNum + 6);
                 setHeight(listHeight + wraptHeight * 2);
             } else {
-                setEnd(listEndNum + (selector.planAmount - listEndNum));
+                setEnd(listEndNum + (planAmount - listEndNum));
             }
         }
     }            
-    console.log(selector.userInput)
+    const [search, setSearch] = useState("")
+    const asd = (e) =>{
+        setSearch(e.target.value)
+    }
+    useEffect(()=>{
+        dispatch(searchName(search))
+    },[search])
 
     return (
         <div className="search_board">
-            <input onChange={(e) => { dispatch(searchName(e))}} type="text" placeholder="검색어를 입력해주세요" />
+            <input onChange={(e) => { asd(e)}} type="text" placeholder="검색어를 입력해주세요" />
+            {/* <input onChange={(e) => { dispatch(searchName(e.nativeEvent.data))}} type="text" placeholder="검색어를 입력해주세요" /> */}
             <ul className="search_category">
                 <li className="active_text" onClick={(e) => { nav(5, e) }}>축제 / 행사</li>
                 <li onClick={(e) => { nav(4, e) }}>카페 / 음식점</li>
@@ -38,7 +45,7 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd }) => {
             </ul>
             <ul className="search_result" onScroll={(e) => { infinity(e.target) }}>
                 {
-                    selector.planData.map((item, idx) => {
+                    listData.map((item, idx) => {
                         return (
                             <li key={idx}>
                                 <img className="hotel_img" src={item.repPhoto.photoid.thumbnailpath} alt="hotel img" />

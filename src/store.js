@@ -31,7 +31,7 @@ let userInput = createSlice({
     initialState:{input :""},
     reducers:{
         searchName(state, e){
-            state.input = e.payload.target.value;
+            state.input = e.payload;
         }
     }
 })
