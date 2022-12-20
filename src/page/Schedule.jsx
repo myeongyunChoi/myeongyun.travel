@@ -4,9 +4,10 @@ import 'react-calendar/dist/Calendar.css';
 import { useState, useEffect } from 'react';
 import ArrowImg from '../image/Arrow.png'
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
 
 const Schedule = (e) => {
+    const selector = useSelector(state=>state)
     const navigate =  useNavigate();
     const [value, setValue] = useState("");
     let [range, setRange] = useState(["", ""]);
@@ -27,7 +28,7 @@ const Schedule = (e) => {
         <div className="date_wrap">
             <h1>언제 떠나시고 싶으신가요?</h1>
             <Calendar
-                onChange={(e) => { Period(e) }}
+                onChange={(e) => {  Period(e) }}
                 formatDay={(locale, date) =>
                     date.toLocaleString('en', { day: 'numeric' })
                 }
@@ -39,13 +40,13 @@ const Schedule = (e) => {
             />
             <div className="travel_range">
                 <ul className="start_date">
-                    <li>출발 날짜 : </li>
+                    <li>출발하는 날 : </li>
                     <li>{range[0].split("-")[0]}년</li>
                     <li>{range[0].split("-")[1]}월</li>
                     <li>{range[0].split("-")[2]}일</li>
                 </ul>
                 <ul className="end_date">
-                    <li>종료 날짜 : </li>
+                    <li>돌아오는 날 : </li>
                     <li>{range[1].split("-")[0]}년</li>
                     <li>{range[1].split("-")[1]}월</li>
                     <li>{range[1].split("-")[2]}일</li>
