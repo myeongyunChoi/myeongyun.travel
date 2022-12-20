@@ -17,6 +17,7 @@ const Planner = () => {
     // c4 = 음식점
     // c5 = 축제/행사
     // c6 = 테마여행
+
     useEffect(() => {
         fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=&locale=kr&category=c${url}&`)
             .then(res => {
@@ -24,18 +25,23 @@ const Planner = () => {
             })
             .then(data => {
                 const filtered = data.items.filter(item => {
-                    return item.title.includes("축제")
+                    return item.title.includes(selector.userInput.input)
                 })
-                setAmount(data.items.length)
-                // console.log(filtered)
                 let copyData = [];
-                for (let i = 0; i < listEndNum; i++) {
-                    copyData.push(data.items[i])
+                if (filtered.length === 0 || selector.userInput.input === "") {
+                    for (let i = 0; i < listEndNum; i++) {
+                        copyData.push(data.items[i])
+                    }
+                    setAmount(data.items.length);
+                } else if (filtered.length > 0) {
+                    for (let i = 0; i < listEndNum; i++) {
+                        copyData.push(filtered[i])
+                    }
+                    setAmount(filtered.length);
                 }
                 setList(copyData);
-                // selector.planData = copyData;
             })
-    }, [url, listEndNum])
+    }, [url, listEndNum, selector.userInput.input])
     const navigate = useNavigate();
     return (
         <>

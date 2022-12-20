@@ -48,12 +48,12 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
                     listData.map((item, idx) => {
                         return (
                             <li key={idx}>
-                                <img className="hotel_img" src={item.repPhoto.photoid.thumbnailpath} alt="hotel img" />
+                                <img className="hotel_img" src={item?.repPhoto?.photoid?.thumbnailpath} alt="hotel img" />
                                 <ul className="text_box">
-                                    <li><h4>{item.title}</h4></li>
-                                    <li><p>{item.introduction}</p></li>
-                                    <li><p>{item.address}</p></li>
-                                    <li><p>{item.phoneno}</p></li>
+                                    <li><h4>{item?.title}</h4></li>
+                                    <li><p>{item?.introduction}</p></li>
+                                    <li><p>{item?.address}</p></li>
+                                    <li><p>{item?.phoneno}</p></li>
                                     <li className="plus_btn"><span>추가하기</span></li>
                                 </ul>
                             </li>
