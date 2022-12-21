@@ -24,12 +24,16 @@ const Planner = () => {
                 return res.json();
             })
             .then(data => {
+                // const areaData= data.items.filter(item => {
+                //     return item.title.includes(selector.areaData)
+                // })
+                // console.log(areaData[0])왜 이러지 이건
                 const filtered = data.items.filter(item => {
                     return item.title.includes(selector.userInput.input)
                 })
                 // let filter = filtered? filtered: data.items 
                 let copyData = [];
-                if (filtered.length == 0) {
+                if (filtered.length === 0) {
                     setEnd(data.items.length);
                     for (let i = 0; i < listEndNum; i++) {
                         copyData.push(data.items[i])

@@ -1,20 +1,16 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
-// let schedule = createSlice({
-//     name: 'calendar',
-//     initialState: [""],
-//     reducers: {
-//         changeSchedule(state, e) {
-//             return (
-//                 e.payload.forEach((item, idx) => {
-//                     let offset = item.getTimezoneOffset() * 60000;
-//                     let date = new Date(item.getTime() - offset);
-//                     state[idx] = date.toISOString().split("T")[0];
-//                 })
-//             )
-//         }
-//     }
-// })
+const areaData = createSlice({
+    name: "areaData",
+    initialState: "",
+    reducers: {
+        areaChoice(state, area) {
+            console.log(area)
+            return state = area.payload;
+        }
+    }
+})
+
 
 let planData = createSlice({
     name: "listData",
@@ -47,36 +43,24 @@ let myPlan = createSlice({
         },
     ],
     reducers: {
-        addPlan(state, addTitle, label) {
-            console.log(addTitle)
-            // if (addTitle.payload.label === "축제/행사") {
-                state[0].festival = addTitle.payload.title
-            // }
-         
-
+        addPlan(state, addPlan) {
+            if (addPlan.payload.contentscd.label === "축제/행사") {
+                state[0].festival = addPlan.payload.title;
+            } else if (addPlan.payload.contentscd.label === "음식점") {
+                state[0].restaurant = addPlan.payload.title;
+            } else if (addPlan.payload.contentscd.label === "관광지") {
+                state[0].place = addPlan.payload.title;
+            } else if (addPlan.payload.contentscd.label === "숙박") {
+                state[0].hotel = addPlan.payload.title;
+            }
         }
     }
 })
 
-// let listAmount = createSlice({
-//     name:"listAmount",
-//     initialState: 6,
-//     reducers:{
-//         expandAmount(state, e, listHeight, setHeight){
-//             const wraptHeight = e.offsetHeight;
-//             if (listHeight / 2 < e.scrollTop) {
-//                 if (state.listAmount <= 93) {
-//                     state + 6);
-//                     setHeight(listHeight + wraptHeight * 2);
-//                 }
-//             }
-//         }
-//     }
-// })
 
 export default configureStore({
     reducer: {
-        // schedule: schedule.reducer,
+        areaData: areaData.reducer,
         planData: planData.reducer,
         planAmount: planAmount.reducer,
         userInput: userInput.reducer,
@@ -84,7 +68,6 @@ export default configureStore({
     },
 })
 
+export let { areaChoice } = areaData.actions
 export let { searchName } = userInput.actions
 export let { addPlan } = myPlan.actions
-// export let {expandAmount} = listAmount
-// export let { changeSchedule } = schedule.actions
