@@ -27,17 +27,24 @@ const Planner = () => {
                 const filtered = data.items.filter(item => {
                     return item.title.includes(selector.userInput.input)
                 })
+                // let filter = filtered? filtered: data.items 
                 let copyData = [];
-                if (filtered.length === 0 || selector.userInput.input === "") {
+                if (filtered.length == 0) {
+                    setEnd(data.items.length);
                     for (let i = 0; i < listEndNum; i++) {
                         copyData.push(data.items[i])
                     }
                     setAmount(data.items.length);
                 } else if (filtered.length > 0) {
+                    setEnd(filtered.length);
                     for (let i = 0; i < listEndNum; i++) {
                         copyData.push(filtered[i])
                     }
                     setAmount(filtered.length);
+                    // console.log(`필터${filtered.length}`)
+                    // console.log(`넘버${listEndNum}`)
+                    // console.log(planAmount)
+                    //setAmount 랜더링되게 변경
                 }
                 setList(copyData);
             })
@@ -60,19 +67,27 @@ const Planner = () => {
                     </ul>
                     <div className="festival">
                         <h3>축제 / 행사</h3>
-                        <p className="festival_name"></p>
+                        <p className="festival_name">
+                            {selector.myPlan[0].festival}
+                        </p>
                     </div>
                     <div className="restaurant">
                         <h3>카페 / 음식점</h3>
-                        <p className="restaurant_name"></p>
+                        <p className="restaurant_name">
+                            {selector.myPlan[0].restaurant}
+                        </p>
                     </div>
                     <div className="place">
                         <h3>관광지</h3>
-                        <p className="place_name"></p>
+                        <p className="place_name">
+                            {selector.myPlan[0].place}
+                        </p>
                     </div>
                     <div className="hotel">
                         <h3>호텔 / 숙박</h3>
-                        <p className="hotel_name"></p>
+                        <p className="hotel_name">
+                            {selector.myPlan[0].hotel}
+                        </p>
                     </div>
                 </div>
                 <SearchPlan setUrl={setUrl} listEndNum={listEndNum} planAmount={planAmount} listData={listData} setEnd={setEnd} />

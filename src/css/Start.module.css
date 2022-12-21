@@ -9,22 +9,30 @@
 }
 
 .title h3{
-    font-size: 1.3rem;
+    font-size: 1.75rem;
     font-weight: 200;
 }
 
 .start_page h1{
-    font-size: 4.25rem;
+    font-size: 5.75rem;
     margin-top: 0.5rem;
 }
 
 .start_btn{
-    width: 26rem;
-    line-height: 5rem;
+    width: 35rem;
+    line-height: 7rem;
     background-color: #BFF0FF;
     color: #ffff;
     text-align: center;
     margin: 0 auto;
-    font-size: 1rem;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.start_btn:hover{
+    background-color: #8ae2fd;
+}
+
+.start_btn h3{
+    font-size: 2rem;
 }

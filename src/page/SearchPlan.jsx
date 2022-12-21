@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchName } from '../store';
+import { searchName, addPlan } from '../store';
 
 const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
 
@@ -24,18 +24,22 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
                 setEnd(listEndNum + (planAmount - listEndNum));
             }
         }
-    }            
+    }
     const [search, setSearch] = useState("")
-    const asd = (e) =>{
+    const userInput = (e) => {
         setSearch(e.target.value)
     }
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(searchName(search))
-    },[search])
+    }, [search])
+
+    const test = (e,a) => {
+        dispatch(addPlan(e, a))
+    }
 
     return (
         <div className="search_board">
-            <input onChange={(e) => { asd(e)}} type="text" placeholder="검색어를 입력해주세요" />
+            <input onChange={(e) => { userInput(e) }} type="text" placeholder="검색어를 입력해주세요" />
             {/* <input onChange={(e) => { dispatch(searchName(e.nativeEvent.data))}} type="text" placeholder="검색어를 입력해주세요" /> */}
             <ul className="search_category">
                 <li className="active_text" onClick={(e) => { nav(5, e) }}>축제 / 행사</li>
@@ -54,7 +58,13 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
                                     <li><p>{item?.introduction}</p></li>
                                     <li><p>{item?.address}</p></li>
                                     <li><p>{item?.phoneno}</p></li>
-                                    <li className="plus_btn"><span>추가하기</span></li>
+                                    <li onClick={() => {
+                                        console.log(item.contentscd.label)
+                                        // if(item.contentscd.label === "축제/행사"){
+                                            test(item)
+                                        // }
+                                      
+                                    }} className="plus_btn"><span>추가하기</span></li>
                                 </ul>
                             </li>
                         )
