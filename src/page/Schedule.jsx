@@ -77,7 +77,9 @@ const Schedule = () => {
                     <li>{range[1].split("-")[2]}일</li>
                 </ul>
                 <div onClick={() => { nextPage() }} className="next_btn2">
-                    <img src={ArrowImg} alt="arrow_icon" className="date_arrow_icon" />
+                    {
+                        localStorage.getItem("startDate") ? <img src={ArrowImg} alt="arrow_icon" className="date_arrow_icon" /> : null
+                    }
                 </div>
             </div>
         </div>
