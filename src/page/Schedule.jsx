@@ -6,29 +6,49 @@ import ArrowImg from '../image/Arrow.png'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-const Schedule = (e) => {
-    const selector = useSelector(state=>state)
-    const navigate =  useNavigate();
-    const [value, setValue] = useState("");
-    let [range, setRange] = useState(["", ""]);
+const Schedule = () => {
+    const selector = useSelector(state => state)
+    const navigate = useNavigate();
+    const [range, setRange] = useState(["", ""]);
+
     const Period = (e) => {
+        //기간 잡기
+        const dateA = new Date(e[0]);
+        const dateB = new Date(e[1]);
+        const diffMSec = dateA.getTime() - dateB.getTime();
+        const diffDate = diffMSec / (24 * 60 * 60 * 1000);
+        localStorage.setItem("range", Math.round(Math.abs(diffDate)));
         let copyRange = [...range];
-        e.forEach((item, idx) => {
-            //한국의 offset을 수동으로 추가, 이격 지우기
-            let offset = item.getTimezoneOffset() * 60000;
-            let date = new Date(item.getTime() - offset);
-            copyRange[idx] = date.toISOString().split("T")[0];
-        });
-        setRange(copyRange);
+        if (new Date().getTime() < e[0].getTime()) {
+            e.forEach((item, idx) => {
+                //한국의 offset을 수동으로 추가, 이격 지우기
+                let offset = item.getTimezoneOffset() * 60000;
+                let date = new Date(item.getTime() - offset);
+                copyRange[idx] = date.toISOString().split("T")[0];
+            });
+            setRange(copyRange);
+            localStorage.setItem("startDate", copyRange[0]);
+            localStorage.setItem("endDate", copyRange[1]);
+        } else {
+            localStorage.removeItem("startDate");
+            localStorage.removeItem("endDate");
+            alert("출발하는 날을 다시 설정해주세요.");
+        }
     }
-    localStorage.setItem("startDate", range[0]);
-    localStorage.setItem("endDate", range[1]);
+
+    const nextPage = () => {
+        if(localStorage.getItem("startDate")){
+            navigate("/planner") 
+        }else{
+            alert("여행 기간을 설정해주세요.")
+        }
+    }
 
     return (
         <div className="date_wrap">
             <h1>언제 떠나시고 싶으신가요?</h1>
             <Calendar
-                onChange={(e) => {  Period(e) }}
+                onChange={(e) => { Period(e) }}
                 formatDay={(locale, date) =>
                     date.toLocaleString('en', { day: 'numeric' })
                 }
@@ -51,8 +71,8 @@ const Schedule = (e) => {
                     <li>{range[1].split("-")[1]}월</li>
                     <li>{range[1].split("-")[2]}일</li>
                 </ul>
-                <div className="next_btn2">
-                    <img onClick={ ()=>{navigate("/planner")}} src={ArrowImg} alt="arrow_icon" className="date_arrow_icon" />
+                <div onClick={() => { nextPage() }} className="next_btn2">
+                    <img src={ArrowImg} alt="arrow_icon" className="date_arrow_icon" />
                 </div>
             </div>
         </div>

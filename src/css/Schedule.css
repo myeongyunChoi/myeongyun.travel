@@ -9,9 +9,9 @@
 }
 
 .date_wrap h1 {
-    font-size: 1.75rem;
+    font-size: 2.5rem;
     font-weight: 500;
-    /* margin-bottom: rem; */
+    margin-bottom: 2rem;
 }
 
 .travel_range {
@@ -30,14 +30,19 @@
 }
 
 .next_btn2 {
-    width: 1rem;
+    width: 3.5rem;
+    height: 2.5rem;
     display: flex;
+    justify-content: center;
     align-items: center;
+    border: 1px solid rgb(165, 165, 165);
+    cursor: pointer;
+    border-radius: 7.5px;
+    opacity: 0.3;
 }
 
 .date_arrow_icon {
-    width: 100%;
-    cursor: pointer;
+    width: 1.5rem;
 }
 
 /* calendar custom */
@@ -68,7 +73,7 @@
 }
 
 .react-calendar__tile--active {
-    background-color: #BFF0FF !important;
+    background-color: #8ae2fd !important;
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {

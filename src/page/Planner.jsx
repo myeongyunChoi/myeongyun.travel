@@ -9,14 +9,21 @@ const Planner = () => {
     const selector = useSelector(state => state);
     const [listData, setList] = useState([])
     const [listEndNum, setEnd] = useState(6);
-    const [url, setUrl] = useState(5)
-    const [planAmount, setAmount] = useState(0)
+    const [url, setUrl] = useState(5);
+    const [planAmount, setAmount] = useState(0);
+    const navigate = useNavigate();
     // c1 = 관광지
     // c2 = 쇼핑
     // c3 = 숙박
     // c4 = 음식점
     // c5 = 축제/행사
     // c6 = 테마여행
+    
+    if(!localStorage.getItem("startDate")){
+        navigate("/schedule");
+    }else if(!selector.areaData){
+        navigate("/area");
+    }
 
     useEffect(() => {
         fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=&locale=kr&category=c${url}&`)
@@ -24,21 +31,20 @@ const Planner = () => {
                 return res.json();
             })
             .then(data => {
-                // const areaData= data.items.filter(item => {
-                //     return item.title.includes(selector.areaData)
-                // })
-                // console.log(areaData[0])왜 이러지 이건
-                const filtered = data.items.filter(item => {
+                const setArea= data.items.filter(item => {
+                    return item.region1cd.label.includes(selector.areaData)
+                })
+                const filtered = setArea.filter(item => {
                     return item.title.includes(selector.userInput.input)
                 })
-                // let filter = filtered? filtered: data.items 
+                // let filter = filtered? filtered: setArea 
                 let copyData = [];
                 if (filtered.length === 0) {
-                    setEnd(data.items.length);
+                    setEnd(setArea.length);
                     for (let i = 0; i < listEndNum; i++) {
-                        copyData.push(data.items[i])
+                        copyData.push(setArea[i])
                     }
-                    setAmount(data.items.length);
+                    setAmount(setArea.length);
                 } else if (filtered.length > 0) {
                     setEnd(filtered.length);
                     for (let i = 0; i < listEndNum; i++) {
@@ -53,7 +59,6 @@ const Planner = () => {
                 setList(copyData);
             })
     }, [url, listEndNum, selector.userInput.input])
-    const navigate = useNavigate();
     return (
         <>
             <header>
@@ -64,7 +69,7 @@ const Planner = () => {
                     <ul className="plan_head">
                         <li><h2>제주도</h2></li>
                         <li><p>JEJU</p></li>
-                        <li><h2 className="day">1DAY / 3DAY</h2></li>
+                        <li><h2 className="day">1DAY / {localStorage.getItem("range")}DAY</h2></li>
                         <li>
                             <p>{localStorage.getItem("startDate")} ~ {localStorage.getItem("endDate")}</p>
                         </li>

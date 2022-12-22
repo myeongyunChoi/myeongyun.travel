@@ -128,10 +128,6 @@ header p {
     margin-top: 1.5rem;
 }
 
-/* .search_result::-webkit-scrollbar{
-    display: none;
-} */
-
 .search_result > li:nth-child(1) {
     margin-top: 0;
 }

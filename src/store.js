@@ -5,7 +5,6 @@ const areaData = createSlice({
     initialState: "",
     reducers: {
         areaChoice(state, area) {
-            console.log(area)
             return state = area.payload;
         }
     }
