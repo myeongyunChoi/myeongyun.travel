@@ -34,24 +34,42 @@ let userInput = createSlice({
 let myPlan = createSlice({
     name: "myPlan",
     initialState: [
+        // {
+        //     festival: "즐기고 싶으신 행사를 추가해주세요.",
+        //     restaurant: "가고 싶은 음식점을 추가해주세요",
+        //     place: "보고 싶었던 관광지를 추가해주세요",
+        //     hotel: "쉬고 싶은 공간을 추가해주세요.",
+        //     category:"festival",
+        //     guideText :"즐기고 싶으신 행사를 추가해주세요."
+        // },
         {
-            festival: "즐기고 싶으신 행사를 추가해주세요.",
-            restaurant: "가고 싶은 음식점을 추가해주세요",
-            place: "보고 싶었던 관광지를 추가해주세요",
-            hotel: "쉬고 싶은 공간을 추가해주세요."
+            label:"축제/행사",
+            category:"festival",
+            guideText :"즐기고 싶으신 행사를 추가해주세요."
+        },
+        {
+            label:"음식점",
+            category:"restaurant",
+            guideText :"가고 싶은 음식점을 추가해주세요"
+        },
+        {
+            label:"관광지",
+            category:"place",
+            guideText :"보고 싶었던 관광지를 추가해주세요"
+        },
+        {
+            label:"숙박",
+            category:"hotel",
+            guideText :"쉬고 싶은 공간을 추가해주세요."
         },
     ],
     reducers: {
         addPlan(state, addPlan) {
-            if (addPlan.payload.contentscd.label === "축제/행사") {
-                state[0].festival = addPlan.payload.title;
-            } else if (addPlan.payload.contentscd.label === "음식점") {
-                state[0].restaurant = addPlan.payload.title;
-            } else if (addPlan.payload.contentscd.label === "관광지") {
-                state[0].place = addPlan.payload.title;
-            } else if (addPlan.payload.contentscd.label === "숙박") {
-                state[0].hotel = addPlan.payload.title;
-            }
+            state.forEach((item)=>{
+                if(addPlan.payload.contentscd.label === item.label){
+                    item.guideText = addPlan.payload.title
+                }
+            })
         }
     }
 })

@@ -34,7 +34,6 @@ const Schedule = () => {
             localStorage.removeItem("endDate");
             alert("출발하는 날을 다시 설정해주세요.");
         }
-        btnActive();
     }
 
     const nextPage = () => {
@@ -43,10 +42,6 @@ const Schedule = () => {
         } else {
             alert("여행 기간을 설정해주세요.")
         }
-    }
-
-    const btnActive = () => {
-        alert("안녕")
     }
 
     return (

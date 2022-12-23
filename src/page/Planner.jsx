@@ -18,10 +18,10 @@ const Planner = () => {
     // c4 = 음식점
     // c5 = 축제/행사
     // c6 = 테마여행
-    
-    if(!localStorage.getItem("startDate")){
+
+    if (!localStorage.getItem("startDate")) {
         navigate("/schedule");
-    }else if(!selector.areaData){
+    } else if (!selector.areaData) {
         navigate("/area");
     }
 
@@ -31,7 +31,7 @@ const Planner = () => {
                 return res.json();
             })
             .then(data => {
-                const setArea= data.items.filter(item => {
+                const setArea = data.items.filter(item => {
                     return item.region1cd.label.includes(selector.areaData)
                 })
                 const filtered = setArea.filter(item => {
@@ -71,33 +71,24 @@ const Planner = () => {
                         <li><p>JEJU</p></li>
                         <li><h2 className="day">1DAY / {localStorage.getItem("range")}DAY</h2></li>
                         <li>
-                            <p>{localStorage.getItem("startDate")} ~ {localStorage.getItem("endDate")}</p>
+                            <p onClick={() => { navigate("/schedule") }}>{localStorage.getItem("startDate")} ~ {localStorage.getItem("endDate")}</p>
                         </li>
                     </ul>
-                    <div className="festival">
-                        <h3>축제 / 행사</h3>
-                        <p className="festival_name">
-                            {selector.myPlan[0].festival}
-                        </p>
-                    </div>
-                    <div className="restaurant">
-                        <h3>카페 / 음식점</h3>
-                        <p className="restaurant_name">
-                            {selector.myPlan[0].restaurant}
-                        </p>
-                    </div>
-                    <div className="place">
-                        <h3>관광지</h3>
-                        <p className="place_name">
-                            {selector.myPlan[0].place}
-                        </p>
-                    </div>
-                    <div className="hotel">
-                        <h3>호텔 / 숙박</h3>
-                        <p className="hotel_name">
-                            {selector.myPlan[0].hotel}
-                        </p>
-                    </div>
+                    {
+                        selector.myPlan.map((item, idx) => {
+                            return (
+                                <div className={item.category} key={idx} >
+                                    <div className="plan_get_head">
+                                        <h3>{item.label}</h3>
+                                        <span>+</span>
+                                    </div>
+                                    <p className="festival_name">
+                                        {item.guideText}
+                                    </p>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <SearchPlan setUrl={setUrl} listEndNum={listEndNum} planAmount={planAmount} listData={listData} setEnd={setEnd} />
             </div>

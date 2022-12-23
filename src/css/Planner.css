@@ -69,6 +69,17 @@ header p {
     margin-top: -1.2rem;
 }
 
+.plan_get_head{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plan_get_head > span{
+    font-size: 1.75rem;
+}
+
 .hotel,
 .festival,
 .restaurant,
