@@ -86,9 +86,7 @@ const Planner = () => {
                                 <div className={item.category} key={idx} >
                                     <div className="plan_get_head">
                                         <h3>{item.label}</h3>
-                                        <span onClick={
-                                           ()=>{test2(idx)} 
-                                        }>+</span>
+                                        <span onClick={()=>{test2(item)}}>+</span>
                                     </div>
                                     {item.guideText.map((item2, idx2) => {
                                         return (

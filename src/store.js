@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { configureStore, createSlice, current } from '@reduxjs/toolkit'
 
 const areaData = createSlice({
     name: "areaData",
@@ -36,22 +36,26 @@ let myPlan = createSlice({
         {
             label: "축제/행사",
             category: "festival",
-            guideText: [null]
+            guideText: [null],
+            count : 0
         },
         {
             label: "음식점",
             category: "restaurant",
-            guideText: [null]
+            guideText: [null],
+            count : 0
         },
         {
             label: "관광지",
             category: "place",
-            guideText: [null]
+            guideText: [null],
+            count : 0
         },
         {
             label: "숙박",
             category: "hotel",
-            guideText: [null]
+            guideText: [null],
+            count : 0
         },
     ],
     reducers: {
@@ -59,17 +63,22 @@ let myPlan = createSlice({
             state.forEach((item, idx) => {
                 if (addPlan.payload.contentscd.label === item.label) {
                     item.guideText.forEach((item2, idx2) => {
-                        if (item2 == null) {
-                            item.guideText[idx2] = addPlan.payload.title
+                        if (item2 === null) {
+                            item.guideText[idx2] = addPlan.payload.title;
                         }
                     })
                 }
             })
         },
-        addList(state, plusIdx) {
+        addList(state, plusItem) {
             state.forEach((item, idx) => {
-                if (idx === plusIdx.payload) {
-                    item.guideText.push(null)
+                if (item.label === plusItem.payload.label) {
+                    item.guideText.forEach((item2) => {
+                        if (item.guideText[item.count]!== null) {
+                            item.count +=1;
+                            item.guideText.push(null);
+                        }
+                    })
                 }
             })
         }
