@@ -19,11 +19,11 @@ const Planner = () => {
     // c5 = 축제/행사
     // c6 = 테마여행
 
-    if (!localStorage.getItem("startDate")) {
-        navigate("/schedule");
-    } else if (!selector.areaData) {
-        navigate("/area");
-    }
+    // if (!localStorage.getItem("startDate")) {
+    //     navigate("/schedule");
+    // } else if (!selector.areaData) {
+    //     navigate("/area");
+    // }
 
     useEffect(() => {
         fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=&locale=kr&category=c${url}&`)
@@ -82,9 +82,13 @@ const Planner = () => {
                                         <h3>{item.label}</h3>
                                         <span>+</span>
                                     </div>
-                                    <p className="festival_name">
-                                        {item.guideText}
-                                    </p>
+                                    {item.guideText.map((item2, idx2) => {
+                                        return (
+                                            <p key={idx2} className="festival_name">
+                                                {item2}
+                                            </p>
+                                        )
+                                    })}
                                 </div>
                             )
                         })
@@ -95,6 +99,5 @@ const Planner = () => {
         </>
     )
 }
-
 
 export default Planner;
