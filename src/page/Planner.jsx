@@ -2,11 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Planner.css';
 import { useState, useEffect } from 'react';
 import SearchPlan from './SearchPlan';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addList } from '../store';
 
 const Planner = () => {
 
     const selector = useSelector(state => state);
+    const dispatch = useDispatch()
     const [listData, setList] = useState([])
     const [listEndNum, setEnd] = useState(6);
     const [url, setUrl] = useState(5);
@@ -59,6 +61,10 @@ const Planner = () => {
                 setList(copyData);
             })
     }, [url, listEndNum, selector.userInput.input])
+
+    const test2 = (e) => {
+        dispatch(addList(e))
+    }
     return (
         <>
             <header>
@@ -80,7 +86,9 @@ const Planner = () => {
                                 <div className={item.category} key={idx} >
                                     <div className="plan_get_head">
                                         <h3>{item.label}</h3>
-                                        <span>+</span>
+                                        <span onClick={
+                                           ()=>{test2(idx)} 
+                                        }>+</span>
                                     </div>
                                     {item.guideText.map((item2, idx2) => {
                                         return (

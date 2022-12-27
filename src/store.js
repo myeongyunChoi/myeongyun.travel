@@ -10,7 +10,6 @@ const areaData = createSlice({
     }
 })
 
-
 let planData = createSlice({
     name: "listData",
     initialState: [],
@@ -42,33 +41,35 @@ let myPlan = createSlice({
         {
             label: "음식점",
             category: "restaurant",
-            guideText: ["가고 싶은 음식점을 추가해주세요"]
+            guideText: [null]
         },
         {
             label: "관광지",
             category: "place",
-            guideText: ["보고 싶었던 관광지를 추가해주세요"]
+            guideText: [null]
         },
         {
             label: "숙박",
             category: "hotel",
-            guideText: ["쉬고 싶은 공간을 추가해주세요."]
+            guideText: [null]
         },
     ],
     reducers: {
         addPlan(state, addPlan) {
             state.forEach((item, idx) => {
-             
                 if (addPlan.payload.contentscd.label === item.label) {
-                        item.guideText.forEach((item2, idx) => {
-                            if(item2 == null) {
-                                console.log(item2)
-                                item2 = addPlan.payload.title
-                                console.log(item2)
-                            }
-                        })
-                        // item.guideText[0] = addPlan.payload.title
-                
+                    item.guideText.forEach((item2, idx2) => {
+                        if (item2 == null) {
+                            item.guideText[idx2] = addPlan.payload.title
+                        }
+                    })
+                }
+            })
+        },
+        addList(state, plusIdx) {
+            state.forEach((item, idx) => {
+                if (idx === plusIdx.payload) {
+                    item.guideText.push(null)
                 }
             })
         }
@@ -88,4 +89,4 @@ export default configureStore({
 
 export let { areaChoice } = areaData.actions
 export let { searchName } = userInput.actions
-export let { addPlan } = myPlan.actions
+export let { addPlan, addList } = myPlan.actions
