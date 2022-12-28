@@ -33,7 +33,7 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
         dispatch(searchName(search))
     }, [search])
 
-    const test = (e, a) => {
+    const addLabel = (e, a) => {
         dispatch(addPlan(e, a))
     }
 
@@ -59,11 +59,7 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
                                     <li><p>{item?.address}</p></li>
                                     <li><p>{item?.phoneno}</p></li>
                                     <li onClick={() => {
-                                        // console.log(item.contentscd.label)
-                                        // if(item.contentscd.label === "축제/행사"){
-                                        test(item)
-                                        // }
-
+                                        addLabel(item)
                                     }} className="plus_btn">
                                         <span>추가하기</span>
                                     </li>

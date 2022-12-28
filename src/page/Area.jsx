@@ -13,6 +13,7 @@ const Area = () => {
     const dispatch = useDispatch();
     const areaName = ["서귀포시", "제주시"]
     const nextBtn = (num) => {
+        localStorage.setItem("area",areaName[num])
         dispatch(areaChoice(areaName[num]))
         navigate("/schedule");
     }

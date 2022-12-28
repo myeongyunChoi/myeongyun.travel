@@ -3,9 +3,13 @@ import '../css/Planner.css';
 import { useState, useEffect } from 'react';
 import SearchPlan from './SearchPlan';
 import { useSelector, useDispatch } from 'react-redux';
-import { addList } from '../store';
-
+import { addList, deletePlan } from '../store';
+import ListDelete from '../image/delete.png'
+import ArrowImg from '../image/Arrow.png'
 const Planner = () => {
+    document.cookie = "safeCookie1=foo; SameSite=Lax";
+    document.cookie = "safeCookie2=foo";
+    document.cookie = "crossCookie=bar; SameSite=None; Secure";
 
     const selector = useSelector(state => state);
     const dispatch = useDispatch()
@@ -14,18 +18,12 @@ const Planner = () => {
     const [url, setUrl] = useState(5);
     const [planAmount, setAmount] = useState(0);
     const navigate = useNavigate();
-    // c1 = 관광지
-    // c2 = 쇼핑
-    // c3 = 숙박
-    // c4 = 음식점
-    // c5 = 축제/행사
-    // c6 = 테마여행
 
-    // if (!localStorage.getItem("startDate")) {
-    //     navigate("/schedule");
-    // } else if (!selector.areaData) {
-    //     navigate("/area");
-    // }
+    if (!localStorage.getItem("startDate")) {
+        navigate("/schedule");
+    }else if(!localStorage.getItem("area")){
+        navigate("/area");
+    }
 
     useEffect(() => {
         fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=&locale=kr&category=c${url}&`)
@@ -34,10 +32,10 @@ const Planner = () => {
             })
             .then(data => {
                 const setArea = data.items.filter(item => {
-                    return item.region1cd.label.includes(selector.areaData)
+                    return item.region1cd.label.includes(localStorage.getItem("area"));
                 })
                 const filtered = setArea.filter(item => {
-                    return item.title.includes(selector.userInput.input)
+                    return item.title.includes(selector.userInput.input);
                 })
                 // let filter = filtered? filtered: setArea 
                 let copyData = [];
@@ -62,8 +60,16 @@ const Planner = () => {
             })
     }, [url, listEndNum, selector.userInput.input])
 
-    const test2 = (e) => {
+    const plusList = (e) => {
         dispatch(addList(e))
+    }
+
+    const planDelete = (item2, item, idx) => {
+        let directArr = []
+        directArr.push(item2)
+        directArr.push(item.label)
+        directArr.push(idx)
+        dispatch(deletePlan(directArr))
     }
     return (
         <>
@@ -75,7 +81,7 @@ const Planner = () => {
                     <ul className="plan_head">
                         <li><h2>제주도</h2></li>
                         <li><p>JEJU</p></li>
-                        <li><h2 className="day">1DAY / {localStorage.getItem("range")}DAY</h2></li>
+                        <li><h2 className="day"> {localStorage.getItem("range")}DAY</h2></li>
                         <li>
                             <p onClick={() => { navigate("/schedule") }}>{localStorage.getItem("startDate")} ~ {localStorage.getItem("endDate")}</p>
                         </li>
@@ -86,12 +92,13 @@ const Planner = () => {
                                 <div className={item.category} key={idx} >
                                     <div className="plan_get_head">
                                         <h3>{item.label}</h3>
-                                        <span onClick={()=>{test2(item)}}>+</span>
+                                        <span onClick={() => { plusList(item) }}>+</span>
                                     </div>
                                     {item.guideText.map((item2, idx2) => {
                                         return (
                                             <p key={idx2} className="festival_name">
                                                 {item2}
+                                                <img onClick={() => { planDelete(item2, item, idx) }} className="deleteBtn" src={ListDelete} alt="삭제버튼" />
                                             </p>
                                         )
                                     })}
