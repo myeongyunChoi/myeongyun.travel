@@ -5,6 +5,7 @@ import SearchPlan from './SearchPlan';
 import { useSelector, useDispatch } from 'react-redux';
 import { addList, deletePlan } from '../store';
 import ListDelete from '../image/delete.png'
+import axios from 'axios';
 import ArrowImg from '../image/Arrow.png'
 const Planner = () => {
     document.cookie = "safeCookie1=foo; SameSite=Lax";
@@ -21,43 +22,34 @@ const Planner = () => {
 
     if (!localStorage.getItem("startDate")) {
         navigate("/schedule");
-    }else if(!localStorage.getItem("area")){
+    } else if (!localStorage.getItem("area")) {
         navigate("/area");
     }
 
     useEffect(() => {
-        fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=&locale=kr&category=c${url}&`)
-            .then(res => {
-                return res.json();
+        axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=&locale=kr&category=c${url}&`).then((res) => {
+            const setArea = res.data.items.filter(item => {
+                return item.region1cd.label.includes(localStorage.getItem("area"));
             })
-            .then(data => {
-                const setArea = data.items.filter(item => {
-                    return item.region1cd.label.includes(localStorage.getItem("area"));
-                })
-                const filtered = setArea.filter(item => {
-                    return item.title.includes(selector.userInput.input);
-                })
-                // let filter = filtered? filtered: setArea 
-                let copyData = [];
-                if (filtered.length === 0) {
-                    setEnd(setArea.length);
-                    for (let i = 0; i < listEndNum; i++) {
-                        copyData.push(setArea[i])
-                    }
-                    setAmount(setArea.length);
-                } else if (filtered.length > 0) {
-                    setEnd(filtered.length);
-                    for (let i = 0; i < listEndNum; i++) {
-                        copyData.push(filtered[i])
-                    }
-                    setAmount(filtered.length);
-                    // console.log(`필터${filtered.length}`)
-                    // console.log(`넘버${listEndNum}`)
-                    // console.log(planAmount)
-                    //setAmount 랜더링되게 변경
+            const filtered = setArea.filter(item => {
+                return item.title.includes(selector.userInput.input);
+            })
+            let copyData = [];
+            if (filtered.length === 0) {
+                setEnd(setArea.length);
+                for (let i = 0; i < listEndNum; i++) {
+                    copyData.push(setArea[i])
                 }
-                setList(copyData);
-            })
+                setAmount(setArea.length);
+            } else if (filtered.length > 0) {
+                setEnd(filtered.length);
+                for (let i = 0; i < listEndNum; i++) {
+                    copyData.push(filtered[i])
+                }
+                setAmount(filtered.length);
+            }
+            setList(copyData);
+        })
     }, [url, listEndNum, selector.userInput.input])
 
     const plusList = (e) => {
