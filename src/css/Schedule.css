@@ -83,3 +83,7 @@
 .react-calendar {
     border-radius: 10px;
 }
+
+.react-calendar__tile {
+    padding: 0 !important;
+}

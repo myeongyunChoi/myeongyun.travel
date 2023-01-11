@@ -1,4 +1,4 @@
-import { configureStore, createSlice, current } from '@reduxjs/toolkit'
+import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const areaData = createSlice({
     name: "areaData",
@@ -64,13 +64,13 @@ let myPlan = createSlice({
             state.forEach((item, idx) => {
                 if (addPlan.payload.contentscd.label === item.label) {
                     item.guideText.forEach((item2, idx2) => {
-                        if (item2 == addPlan.payload.title) {
+                        if (item2 === addPlan.payload.title) {
                             isRepeat = true;
                             alert("이미 추가하신 플랜입니다.")
                         }
                     })
                     item.guideText.forEach((item2, idx2) => {
-                        if (item2 === null && isRepeat == false) {
+                        if (item2 === null && isRepeat === false) {
                             item.guideText[idx2] = addPlan.payload.title;
                         }
                     });
@@ -96,7 +96,7 @@ let myPlan = createSlice({
         },
         deletePlan(state, eItem) {
             let target = state.find(item => {
-                return item.label == eItem.payload[1];
+                return item.label === eItem.payload[1];
             })
             let deleteState = [];
             deleteState = target.guideText.filter(item => {
