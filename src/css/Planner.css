@@ -166,9 +166,21 @@ header p {
     width: 100%;
     height: 12.5rem;
     border: 1px solid #D9D9D9;
-    margin-top: 1.25rem;
     display: flex;
+    justify-content: flex-start;
     padding: 0.75rem;
+}
+
+.search_result .hotel_img {
+    height: 100%;
+    width: 11rem;
+    opacity: 0.9;
+}
+
+.search_result .hotel_img img {
+    height: 100%;
+    width: 11rem;
+    opacity: 0.9;
 }
 
 .text_box {
@@ -199,12 +211,6 @@ header p {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-}
-
-.search_result .hotel_img {
-    height: 100%;
-    width: 11rem;
-    opacity: 0.9;
 }
 
 .active_text {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Area.css';
 import ArrowImg from '../image/Arrow.png';
 import leftImg from '../image/area_left.jpg';
-import rightImg from '../image/area_right.png';
+import rightImg from '../image/area_right.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { areaChoice } from '../store';
 

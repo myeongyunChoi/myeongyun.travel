@@ -52,7 +52,9 @@ const SearchPlan = ({ listData, setUrl, listEndNum, setEnd, planAmount }) => {
                     listData.map((item, idx) => {
                         return (
                             <li key={idx}>
-                                <img className="hotel_img" src={item?.repPhoto?.photoid?.thumbnailpath} alt="hotel img" />
+                                <div className="hotel_img">
+                                    <img src={item?.repPhoto?.photoid?.thumbnailpath} alt="hotel img" />
+                                </div>
                                 <ul className="text_box">
                                     <li><h4>{item?.title}</h4></li>
                                     <li><p>{item?.introduction}</p></li>
